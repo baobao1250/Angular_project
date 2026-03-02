@@ -1,0 +1,46 @@
+    <div class="max-w-3xl mx-auto p-8 text-center font-sans">
+      <h2 class="text-3xl font-bold text-slate-800 mb-8">📦 Bài 5: Content Projection</h2>
+      
+      <div class="flex justify-center gap-4">
+        <button (click)="showDeleteModal = true" class="bg-red-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-red-600">
+          Mở Modal Xóa Cảnh Báo
+        </button>
+
+        <button (click)="showPromoModal = true" class="bg-purple-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-purple-600">
+          Mở Modal Quảng Cáo
+        </button>
+      </div>
+
+      <app-modal [isOpen]="showDeleteModal" (closeEvent)="showDeleteModal = false">
+        
+        <span modal-title class="text-red-600">⚠️ Cảnh báo nguy hiểm</span>
+        
+        <p class="text-lg">Bạn có chắc chắn muốn xóa toàn bộ cơ sở dữ liệu không? Hành động này không thể hoàn tác!</p>
+        
+        <div modal-footer>
+          <button (click)="showDeleteModal = false" class="px-5 py-2 text-slate-600 bg-slate-200 hover:bg-slate-300 rounded-lg">Hủy bỏ</button>
+          <button (click)="showDeleteModal = false" class="px-5 py-2 text-white bg-red-600 hover:bg-red-700 rounded-lg">Tôi đồng ý xóa</button>
+        </div>
+
+      </app-modal>
+
+
+      <app-modal [isOpen]="showPromoModal" (closeEvent)="showPromoModal = false">
+        
+        <span modal-title>🎉 Khuyến mãi khủng mùa hè</span>
+        
+        <div class="text-center">
+          <img src="https://picsum.photos/400/200" alt="Promo" class="rounded-xl w-full mb-4 shadow-sm" />
+          <h4 class="text-2xl font-bold text-purple-600 mb-2">Giảm giá lên đến 50%</h4>
+          <p>Nhập mã <strong class="bg-yellow-200 px-2 py-1 rounded text-slate-800">ANGULAR17</strong> để nhận ưu đãi.</p>
+        </div>
+        
+        <div modal-footer>
+          <button (click)="showPromoModal = false" class="w-full px-5 py-3 text-white bg-purple-600 hover:bg-purple-700 rounded-lg font-bold">
+            Mua Ngay Kẻo Lỡ!
+          </button>
+        </div>
+
+      </app-modal>
+
+    </div>

@@ -1,0 +1,33 @@
+<div class="flex flex-col gap-6 max-w-2xl">
+  <h2 class="text-2xl font-bold text-gray-800">Bài 2: State & &#64;if (Accordion)</h2>
+
+  <div class="border border-gray-200 rounded-lg shadow-sm bg-white overflow-hidden">
+    
+    <button 
+      (click)="toggleOpen()"
+      class="w-full flex justify-between items-center p-5 bg-gray-50 hover:bg-gray-100 transition-colors focus:outline-none"
+    >
+      <span class="font-semibold text-gray-800 text-lg">
+        Angular có khó học hơn React không?
+      </span>
+      
+      <span 
+        class="transition-transform duration-300 text-gray-500"
+        [class.rotate-180]="isOpen">
+        ▼
+      </span>
+    </button>
+
+    @if (isOpen) {
+      <div class="p-5 border-t border-gray-200 text-gray-600 leading-relaxed bg-white">
+        <p>
+          Thời gian đầu sẽ thấy khó hơn vì Angular ép bạn phải tuân thủ kiến trúc OOP, 
+          TypeScript chặt chẽ và Dependency Injection. Nhưng khi làm dự án lớn (Enterprise), 
+          sự chặt chẽ này giúp code cực kỳ dễ bảo trì, cấu trúc đồng nhất và không phải 
+          đau đầu chọn thư viện ngoài (như Router, State Management) vì Angular đã có sẵn tất cả!
+        </p>
+      </div>
+    }
+
+  </div>
+</div>

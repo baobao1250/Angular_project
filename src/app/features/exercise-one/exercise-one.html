@@ -1,0 +1,39 @@
+<div class="flex flex-col gap-6 relative">
+  <h2 class="text-2xl font-bold text-gray-800">Bài 1: Render List &#64;</h2>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 w-full">
+    @for (user of users; track user.name) {
+      
+      <app-user-card 
+        class="block w-full" 
+        [userInfo]="user"
+        (cardClick)="viewDetail($event)" 
+      ></app-user-card>
+      
+    }
+  </div>
+
+  @if (selectedUser) {
+    <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      
+      <div class="bg-white p-8 rounded-2xl shadow-2xl w-96 max-w-[90vw] text-center transform transition-all">
+        <img [src]="selectedUser.avatarUrl" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-blue-100 shadow-md">
+        <h3 class="text-2xl font-bold text-gray-800 mb-1">{{ selectedUser.name }}</h3>
+        <p class="text-blue-600 font-medium mb-6">{{ selectedUser.role }}</p>
+        
+        <p class="text-gray-500 text-sm mb-6 px-4">
+          Đây là thông tin chi tiết của {{ selectedUser.name }}. Trong dự án thực tế, bạn có thể gọi API ở đây để lấy thêm dữ liệu.
+        </p>
+
+        <button 
+          (click)="closeModal()"
+          class="bg-gray-800 text-white px-6 py-2 rounded-lg font-medium hover:bg-gray-700 transition-colors w-full"
+        >
+          Đóng cửa sổ
+        </button>
+      </div>
+
+    </div>
+  }
+
+</div>

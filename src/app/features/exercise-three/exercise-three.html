@@ -1,0 +1,16 @@
+<div class="flex flex-col gap-8 w-full max-w-4xl">
+  @if (isLoading()) {
+  <div class="text-center text-gray-500 py-10">
+    <p class="text-xl font-semibold animate-pulse">⏳ Đang lấy dữ liệu từ Server...</p>
+  </div>
+  } @else {
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    @for (item of products(); track item.id) {
+
+    <app-product-item class="block h-full" [productItem]="item" (addToCart)="handleAddToCart($event)">
+    </app-product-item>
+
+    }
+  </div>
+  }
+</div>

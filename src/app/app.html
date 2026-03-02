@@ -1,0 +1,40 @@
+<div class="min-h-screen bg-gray-100 flex">
+  <aside class="w-64 bg-white shadow-md p-5 flex flex-col gap-4">
+    <h2 class="text-xl font-bold text-blue-600 mb-4">{{title}}</h2>
+    <div class="bg-yellow-100 p-3 rounded-lg border border-yellow-300 mb-4">
+      <p class="text-sm text-yellow-800 font-semibold">Giỏ hàng toàn cục:</p>
+      <p class="text-xl font-bold text-red-600">
+        {{ cartService.totalPrice() | currency:'VND':'symbol':'1.0-0' }}
+      </p>
+    </div>
+
+    <a routerLink="/bai-1" routerLinkActive="bg-blue-100 text-blue-700"
+      class="p-3 rounded-lg hover:bg-gray-50 font-medium cursor-pointer">Bài 1: User Card</a>
+    <a routerLink="/bai-2" routerLinkActive="bg-blue-100 text-blue-700"
+      class="p-3 rounded-lg hover:bg-gray-50 font-medium cursor-pointer">Bài 2: Accordion</a>
+    <a routerLink="/bai-3" routerLinkActive="bg-blue-100 text-blue-700"
+      class="p-3 rounded-lg hover:bg-gray-50 font-medium cursor-pointer">Bài 3: Mini Shop</a>
+    <a routerLink="/bai-4" routerLinkActive="bg-blue-100 text-blue-700"
+      class="p-3 rounded-lg hover:bg-gray-50 font-medium cursor-pointer">Bài 4: List Product</a>
+    <a routerLink="/bai-5" routerLinkActive="bg-blue-100 text-blue-700"
+      class="p-3 rounded-lg hover:bg-gray-50 font-medium cursor-pointer">Bài 5: Content Projection</a>
+    <a routerLink="/bai-6" routerLinkActive="bg-blue-100 text-blue-700"
+      class="p-3 rounded-lg hover:bg-gray-50 font-medium cursor-pointer">Bài 6: Expense Tracker</a>
+
+    <button (click)="handleAuthClick()"
+      class="w-full py-2.5 rounded-xl font-medium text-sm transition-colors flex items-center justify-center gap-2 mt-auto text-white"
+      [class.bg-red-600]="authService.isLoggedIn()" [class.hover:bg-red-700]="authService.isLoggedIn()"
+      [class.bg-blue-600]="!authService.isLoggedIn()" [class.hover:bg-blue-700]="!authService.isLoggedIn()">
+      @if (authService.isLoggedIn()) {
+      Đăng xuất
+      } @else {
+      Đăng nhập
+      }
+    </button>
+  </aside>
+
+
+  <main class="flex-1 p-10">
+    <router-outlet></router-outlet>
+  </main>
+</div>

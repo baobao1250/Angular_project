@@ -1,0 +1,52 @@
+<div class="relative flex flex-col h-full bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group">
+
+  @if (productItem.discount) {
+    <div class="absolute top-4 left-0 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-r-lg shadow-sm z-10">
+      Giảm {{ productItem.discount }}%
+    </div>
+  }
+
+  <div class="w-full pt-6 pb-2 px-6 bg-white flex items-center justify-center overflow-hidden">
+    <img 
+      [src]="productItem.imageUrl" 
+      [alt]="productItem.name" 
+      class="h-40 w-full object-contain group-hover:scale-110 transition-transform duration-500"
+    >
+  </div>
+
+  <div class="p-5 flex flex-col flex-1">
+    
+    <h3 
+      class="text-sm font-medium text-gray-800 line-clamp-2 mb-3 leading-snug" 
+      [title]="productItem.name"
+    >
+      {{ productItem.name }}
+    </h3>
+
+    <div class="mt-auto flex flex-col mb-4">
+      @if (productItem.discount) {
+        <span class="text-gray-400 line-through text-xs mb-0.5">
+          {{ productItem.price | currency:'VND':'symbol':'1.0-0' }}
+        </span>
+        <span class="text-red-600 font-bold text-lg">
+          {{ productItem.price - (productItem.price * productItem.discount / 100) | currency:'VND':'symbol':'1.0-0' }}
+        </span>
+      } @else {
+        <span class="text-blue-600 font-bold text-lg pt-4">
+          {{ productItem.price | currency:'VND':'symbol':'1.0-0' }}
+        </span>
+      }
+    </div>
+
+    <button 
+      (click)="buy()"
+      class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-medium text-sm hover:bg-blue-700 active:bg-blue-800 transition-colors flex items-center justify-center gap-2"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+      Chọn mua
+    </button>
+  </div>
+
+</div>
