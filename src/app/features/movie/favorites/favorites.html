@@ -1,0 +1,36 @@
+<div class="p-6 max-w-4xl mx-auto font-sans">
+      <h1 class="text-3xl font-bold mb-6 text-slate-800">❤️ Phim Yêu Thích Của Bạn</h1>
+
+      @if (isLoading()) {
+        <p class="text-center text-slate-500 animate-pulse mt-10">Đang tải danh sách...</p>
+      } @else if (favoriteMovies().length > 0) {
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          @for (movie of favoriteMovies(); track movie.id) {
+            <a [routerLink]="['/movie', movie.id]" class="block group cursor-pointer relative">
+              
+              <button 
+                (click)="$event.stopPropagation(); removeFavorite(movie.id)" 
+                class="absolute top-2 right-2 bg-red-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shadow hover:bg-red-600 z-10 opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                &times;
+              </button>
+
+              <div class="overflow-hidden rounded-lg shadow-md group-hover:shadow-xl transition-all">
+                 <img 
+                   [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'https://via.placeholder.com/500x750?text=No+Poster'" 
+                   class="w-full h-auto transform group-hover:scale-105 transition-transform duration-300"
+                 >
+              </div>
+              <h3 class="font-bold mt-2 truncate text-slate-800">{{ movie.title }}</h3>
+            </a>
+          }
+        </div>
+      } @else {
+        <div class="text-center mt-20">
+           <p class="text-xl text-slate-500 mb-4">Bạn chưa lưu bộ phim nào cả!</p>
+           <a routerLink="/movies" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700">
+             Đi tìm phim ngay
+           </a>
+        </div>
+      }
+    </div>

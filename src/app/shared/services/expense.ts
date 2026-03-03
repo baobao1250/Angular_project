@@ -1,13 +1,13 @@
-// features/exercise-six/expense.service.ts
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, effect, afterNextRender } from '@angular/core';
 import { Transaction } from '../models/transaction';
 
-@Injectable() // Khai báo trống thế này để lát nữa ta cung cấp nó riêng cho Bài 6
+@Injectable() 
 export class ExpenseService {
-  // 1. Dữ liệu gốc: Danh sách giao dịch (Signal)
   transactions = signal<Transaction[]>([]);
+  
+  // 🛡️ 1. Tạo khiên bảo vệ: Đánh dấu xem đã đọc xong LocalStorage chưa
+  private isLoaded = false;
 
-  // 2. Dữ liệu phái sinh (Computed): Tự động tính toán mỗi khi mảng gốc thay đổi
   totalIncome = computed(() => 
     this.transactions()
       .filter(t => t.type === 'income')
@@ -20,10 +20,36 @@ export class ExpenseService {
       .reduce((sum, t) => sum + t.amount, 0)
   );
 
-  // Số dư = Tổng thu - Tổng chi
   balance = computed(() => this.totalIncome() - this.totalExpense());
 
-  // 3. Các hàm hành động (Actions)
+  constructor() {
+    // 1. Giai đoạn ĐỌC dữ liệu
+    afterNextRender(() => {
+      const savedData = localStorage.getItem('EXPENSES_DATA');
+      if (savedData) {
+        const parsedData: Transaction[] = JSON.parse(savedData).map((item: any) => ({
+          ...item,
+          date: new Date(item.date) 
+        }));
+        this.transactions.set(parsedData);
+      }
+      
+      // 🛡️ 2. Báo hiệu: Đã đọc xong dữ liệu an toàn, hạ khiên xuống!
+      this.isLoaded = true; 
+    });
+
+    // 2. Giai đoạn LƯU dữ liệu
+    effect(() => {
+      const dataToSave = this.transactions();
+      
+      // 🛡️ 3. Kiểm tra: Chỉ cho phép lưu nếu đang ở Trình duyệt VÀ đã đọc xong dữ liệu cũ
+      if (typeof window !== 'undefined' && this.isLoaded) {
+        localStorage.setItem('EXPENSES_DATA', JSON.stringify(dataToSave));
+        console.log('💾 Đã tự động lưu dữ liệu xuống LocalStorage!');
+      }
+    });
+  }
+  
   addTransaction(data: { description: string; amount: number; type: 'income' | 'expense' }) {
     const newTx: Transaction = {
       ...data,

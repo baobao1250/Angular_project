@@ -1,0 +1,32 @@
+<div class="p-6 max-w-4xl mx-auto">
+      <h1 class="text-3xl font-bold mb-6">🍿 Rạp Phim Bỏ Túi</h1>
+      
+      <input 
+        [formControl]="searchControl"
+        type="text" 
+        placeholder="Nhập tên phim..." 
+        class="w-full p-4 text-lg border-2 border-slate-200 rounded-xl mb-8 focus:border-blue-500 outline-none"
+      >
+
+      @if (isLoading()) {
+        <p class="text-slate-500 text-center">Đang tìm kiếm...</p>
+      }
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        @for (movie of movies(); track movie.id) {
+          <a [routerLink]="['/movie', movie.id]" class="block group cursor-pointer">
+            <img 
+              [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'https://via.placeholder.com/500x750?text=No+Image'" 
+              [alt]="movie.title"
+              class="rounded-lg shadow-md group-hover:shadow-xl transition-all"
+            >
+            <h3 class="font-bold mt-2 truncate">{{ movie.title }}</h3>
+            <p class="text-sm text-slate-500">⭐ {{ movie.vote_average }}</p>
+          </a>
+        } @empty {
+          @if (!isLoading() && searchControl.value) {
+            <p class="col-span-full text-center text-slate-500">Không tìm thấy phim. Thử từ khóa khác nhé!</p>
+          }
+        }
+      </div>
+    </div>

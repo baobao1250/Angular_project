@@ -1,0 +1,31 @@
+<div class="p-6 max-w-4xl mx-auto font-sans">
+      <a routerLink="/movies" class="text-blue-500 hover:underline mb-6 inline-block font-medium">&larr; Quay lại tìm kiếm</a>
+      
+      @if (isLoading()) {
+        <p class="text-center text-slate-500 animate-pulse">Đang tải thông tin phim...</p>
+      } @else if (movie(); as m) {
+        <div class="flex flex-col md:flex-row gap-8 mt-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+          <img 
+            [src]="m.poster_path ? 'https://image.tmdb.org/t/p/w500' + m.poster_path : 'https://via.placeholder.com/500x750?text=No+Poster'" 
+            class="w-full md:w-1/3 rounded-xl shadow-lg object-cover"
+          >
+          <div class="flex-1">
+            <h1 class="text-4xl font-bold mb-2 text-slate-800">{{ m.title }}</h1>
+            <div class="flex gap-4 text-slate-500 mb-6 font-medium">
+              <span>📅 {{ m.release_date | date:'dd/MM/yyyy' }}</span>
+              <span>⭐ {{ m.vote_average }}/10</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3 text-slate-800">Tóm tắt nội dung</h3>
+            <p class="text-lg leading-relaxed text-slate-600">{{ m.overview || 'Chưa có thông tin tóm tắt.' }}</p>
+            
+            <button 
+              (click)="toggleFavorite(m.id)"
+              [class]="isFav(m.id) ? 'bg-slate-200 text-slate-600' : 'bg-pink-500 text-white hover:bg-pink-600'"
+              class="mt-8 px-8 py-3 rounded-xl font-bold transition-colors shadow-md active:scale-95"
+            >
+              {{ isFav(m.id) ? '💔 Xóa khỏi Yêu Thích' : '❤️ Thêm vào Yêu Thích' }}
+            </button>
+          </div>
+        </div>
+      } 
+    </div>

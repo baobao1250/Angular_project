@@ -32,6 +32,23 @@ export const routes: Routes = [
         loadComponent: () => import('./features/exercise-six/exercise-six').then(m => m.ExerciseSix),
         canActivate: [authGuard]
     },
+
+    {
+        path: 'movies',
+        loadComponent: () => import('./features/movie/home/home').then(m => m.HomeComponent)
+    },
+    {
+        // The colon ':' defines a dynamic parameter named 'id'
+        path: 'movie/:id',
+        loadComponent: () => import('./features/movie/movie-details/movie-details').then(m => m.MovieDetailsComponent)
+    },
+    {
+        path: 'favorites',
+        loadComponent: () => import('./features/movie/favorites/favorites').then(m => m.FavoritesComponent),
+        // You can attach your authGuard here from Level 1!
+        // canActivate: [authGuard] 
+    },
+
     {
         path: 'login',
         loadComponent: () => import('./features/login/login').then(m => m.Login)
